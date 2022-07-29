@@ -1,0 +1,95 @@
+#ifndef GPU_KERNELS_H
+#define GPU_KERNELS_H
+#include "taco_tensor_t.h"
+float get_gpu_timer_result();
+/*
+void spmv_csr_gpu_taco(taco_tensor_t *y, taco_tensor_t *A, taco_tensor_t *x);
+void spmv_csr_gpu_cusparse(taco_tensor_t *y, taco_tensor_t *A, taco_tensor_t *x);
+void spmv_csr_gpu_merge(taco_tensor_t *y, taco_tensor_t *A, taco_tensor_t *x);
+*/
+
+void spmm_csr_gpu_taco(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_csr_gpu_warp(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_csr_gpu_cusparse(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_csr_gpu_reduction(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_csr_pr_eb(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_csr_cusparse_row(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_taco(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_taco(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_taco(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_taco(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+//void sddmm_csr_gpu_taco(taco_tensor_t *A, taco_tensor_t *B, taco_tensor_t *C, taco_tensor_t *D);
+//void sddmm_csr_gpu_warp(taco_tensor_t *A, taco_tensor_t *B, taco_tensor_t *C, taco_tensor_t *D);
+//void spmspv_csr_gpu_taco(taco_tensor_t *y, taco_tensor_t *A, taco_tensor_t *x);
+//void spmspv_csr_cpu_taco_ref(taco_tensor_t *y, taco_tensor_t *A, taco_tensor_t *x);
+void spmm_eb_sr_search(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_search(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_512_64(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_512_64(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_4_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_4_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_4_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_8_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_8_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_8_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_8_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_8_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_8_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_16_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_16_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_16_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_16_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_16_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_16_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_16_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_16_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_16_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_32_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_32_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_32_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_32_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_32_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_32_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_32_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_32_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_32_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_1_32_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_2_32_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_pr_256_4_32_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_256_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_256_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_256_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_256_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_128_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_128_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_128_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_128_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_64_32(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_64_16(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_64_8(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_pr_64_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_1_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_1_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_1_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_2_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_2_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_2_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_4_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_4_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_rb_sr_256_4_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_4_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_4_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_4_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_8_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_8_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_8_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_16_1(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_16_2(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+void spmm_eb_sr_256_16_4(taco_tensor_t *C, taco_tensor_t *A, taco_tensor_t *B);
+
+#endif

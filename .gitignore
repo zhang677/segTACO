@@ -1,0 +1,3 @@
+matrix-eval-gpu
+*.o
+matrix_results/

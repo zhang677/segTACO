@@ -19,10 +19,8 @@
 #include <cmath>
 #include <limits>
 
-//#include <omp.h>
 
 #include "mmio.h"
-//#include "splatt.h"
 #include <Eigen/Sparse>
 #include "taco_tensor_t.h"
 
@@ -346,43 +344,6 @@ void print_coo_matrix(const COO coo, const std::string log_path) {
     }
   }  
 }
-
-/*
-splatt_csf* read_tensor(const std::string tensor_path) {
-  double *cpd_opts = splatt_default_opts();
-  cpd_opts[SPLATT_OPTION_NTHREADS] = omp_get_num_threads();
-  cpd_opts[SPLATT_OPTION_NITER] = 0;
-  cpd_opts[SPLATT_OPTION_CSF_ALLOC] = SPLATT_CSF_ONEMODE;
-  cpd_opts[SPLATT_OPTION_TILE] = SPLATT_NOTILE;
-  cpd_opts[SPLATT_OPTION_VERBOSITY] = SPLATT_VERBOSITY_NONE;
-
-  splatt_idx_t nmodes;
-  splatt_csf *tt;
-  splatt_csf_load(tensor_path.c_str(), &nmodes, &tt, cpd_opts);
-  
-  splatt_free_opts(cpd_opts);
-
-  return tt;
-}
-
-taco_tensor_t to_taco_tensor(const splatt_csf* tensor) {
-  taco_tensor_t csft;
-
-  csft.dimensions = new int32_t[tensor->nmodes];
-  for (int i = 0; i < tensor->nmodes; ++i) {
-    csft.dimensions[i] = tensor->dims[tensor->dim_perm[i]];
-  }
-  csft.indices = new int32_t**[tensor->nmodes];
-  for (int i = 1; i < tensor->nmodes; ++i) {
-    csft.indices[i] = new int32_t*[2];
-    csft.indices[i][0] = (int32_t*)tensor->pt->fptr[i - 1];
-    csft.indices[i][1] = (int32_t*)tensor->pt->fids[i];
-  }
-  csft.vals = (float*)tensor->pt->vals;
-
-  return csft;
-}
-*/
 // compress top level
 void compress_top_level(taco_tensor_t &t) {
   int *pos_array = (int32_t*)malloc(sizeof(int32_t) * 2);
@@ -495,16 +456,6 @@ taco_tensor_t to_taco_tensor(const EigenColMajor& matrix) {
 
   return vt;
 }
-/*
-EigenColMajor gen_col_ones(int rows, int cols) {
-  return Eigen::Matrix<float, 2, 3, Eigen::ColMajor>({1,2,3,4,5,6});
-}
-
-EigenColMajor gen_row_ones(int rows, int cols) {
-  return Eigen::Matrix<float, 2, 3, Eigen::RowMajor>({1,2,3,4,5,6});
-}
-*/
-
 
 EigenColMajor gen_col_major_matrix(int rows, int cols) {
   return EigenColMajor::Random(rows, cols) + EigenColMajor::Ones(rows, cols);
@@ -631,19 +582,6 @@ double compare_matrices_float(const taco_tensor_t a, const taco_tensor_t b) {
   const size_t N = a.dimensions[0] * a.dimensions[1];
   return compare_array_my((float*)a.vals, (float*)b.vals, N);
 }
-
-
-
-
-/*
-float compare_matrices_int(const taco_tensor_t a, const taco_tensor_t b) {
-  assert(a.dimensions[0] == b.dimensions[0]);
-  assert(a.dimensions[1] == b.dimensions[1]);
-  const size_t N = a.dimensions[0] * a.dimensions[1];
-  return compare_array_int(a.vals,b.vals, N);
-}
-*/
-
 
 
 #endif
